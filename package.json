@@ -1,0 +1,15 @@
+{
+  "name": "govflow-vn",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Auditable Vietnamese public-service dossier workflow prototype",
+  "scripts": {
+    "test": "node --test",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
+

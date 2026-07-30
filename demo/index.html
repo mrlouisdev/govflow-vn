@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GovFlow VN — Offline MVP</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <span class="eyebrow">VIETDOC EDGE · OFFLINE MVP</span>
+      <h1>GovFlow VN</h1>
+      <p>Kiểm tra hồ sơ có trích dẫn, cảnh báo ngoài phạm vi và audit trail.</p>
+    </div>
+    <span class="badge">Synthetic ruleset</span>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>1. Hồ sơ thử nghiệm</h2>
+      <p class="muted">Dữ liệu và quy tắc trong demo là synthetic, không đại diện thủ tục hành chính chính thức.</p>
+      <div class="actions">
+        <button id="load-complete" class="secondary">Mẫu đầy đủ</button>
+        <button id="load-incomplete" class="secondary">Mẫu có lỗi</button>
+      </div>
+      <textarea id="dossier" spellcheck="false"></textarea>
+      <button id="analyze" class="primary">Phân tích hồ sơ</button>
+    </section>
+
+    <section class="panel">
+      <h2>2. Kết quả có kiểm chứng</h2>
+      <div id="summary" class="summary neutral">Chưa chạy kiểm tra.</div>
+      <div id="findings" class="findings"></div>
+      <details>
+        <summary>Audit trail</summary>
+        <pre id="audit">—</pre>
+      </details>
+      <h3>Kiểm tra phạm vi câu hỏi</h3>
+      <div class="question-row">
+        <input id="question" value="Hồ sơ còn thiếu giấy tờ nào?">
+        <button id="ask" class="secondary">Kiểm tra</button>
+      </div>
+      <p id="scope-answer" class="muted"></p>
+    </section>
+  </main>
+
+  <footer>GovFlow deterministic workflow shell v0.1.0 · OCR/SLM adapters are roadmap items.</footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,9 @@
+{
+  "requestTitle": "Hồ sơ thử nghiệm A",
+  "requestType": "Tiếp nhận thử nghiệm",
+  "applicantReference": "DEMO-001",
+  "submissionDate": "2026-07-31",
+  "signed": true,
+  "attachments": ["application_form", "supporting_document"]
+}
+
