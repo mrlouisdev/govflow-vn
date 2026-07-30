@@ -2,6 +2,8 @@
 
 Vietnamese SLM agent concept for auditable public-service dossier checking.
 
+**Live demo:** https://mrlouisdev.github.io/govflow-vn/demo/
+
 GovFlow VN is an evidence-first prototype for this workflow:
 
 1. ingest a dossier;
@@ -58,4 +60,3 @@ The bundled dossiers and rules are synthetic. They validate the workflow and do 
 ## License
 
 Apache-2.0.
-
