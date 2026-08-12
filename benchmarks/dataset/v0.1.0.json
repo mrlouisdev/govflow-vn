@@ -1,0 +1,113 @@
+{
+  "id": "govflow-synthetic-eval-v0.1.0",
+  "version": "0.1.0",
+  "rulesetId": "GOVFLOW-DEMO-001",
+  "description": "Synthetic cases for the public demo ruleset. No case represents an official Vietnamese procedure or production traffic.",
+  "dossiers": [
+    {
+      "id": "complete-valid",
+      "slice": "complete",
+      "input": {
+        "requestTitle": "Hồ sơ thử nghiệm A",
+        "requestType": "Tiếp nhận thử nghiệm",
+        "applicantReference": "DEMO-001",
+        "submissionDate": "2026-07-31",
+        "signed": true,
+        "attachments": ["application_form", "supporting_document"]
+      },
+      "expectedMissing": []
+    },
+    {
+      "id": "single-missing-field",
+      "slice": "single-omission",
+      "input": {
+        "requestTitle": "Hồ sơ thử nghiệm B",
+        "applicantReference": "DEMO-002",
+        "submissionDate": "2026-08-01",
+        "signed": true,
+        "attachments": ["application_form", "supporting_document"]
+      },
+      "expectedMissing": ["MISSING_FIELD:requestType"]
+    },
+    {
+      "id": "single-missing-attachment",
+      "slice": "single-omission",
+      "input": {
+        "requestTitle": "Hồ sơ thử nghiệm C",
+        "requestType": "Tiếp nhận thử nghiệm",
+        "applicantReference": "DEMO-003",
+        "submissionDate": "2026-08-02",
+        "signed": true,
+        "attachments": ["application_form"]
+      },
+      "expectedMissing": ["MISSING_ATTACHMENT:supporting_document"]
+    },
+    {
+      "id": "multiple-missing-components",
+      "slice": "multiple-omissions",
+      "input": {
+        "requestTitle": "   ",
+        "requestType": "Tiếp nhận thử nghiệm",
+        "applicantReference": null,
+        "submissionDate": "2026-08-03",
+        "signed": true,
+        "attachments": []
+      },
+      "expectedMissing": [
+        "MISSING_FIELD:requestTitle",
+        "MISSING_FIELD:applicantReference",
+        "MISSING_ATTACHMENT:application_form",
+        "MISSING_ATTACHMENT:supporting_document"
+      ]
+    },
+    {
+      "id": "all-required-components-missing",
+      "slice": "multiple-omissions",
+      "input": {
+        "signed": false
+      },
+      "expectedMissing": [
+        "MISSING_FIELD:requestTitle",
+        "MISSING_FIELD:requestType",
+        "MISSING_FIELD:applicantReference",
+        "MISSING_FIELD:submissionDate",
+        "MISSING_ATTACHMENT:application_form",
+        "MISSING_ATTACHMENT:supporting_document"
+      ]
+    },
+    {
+      "id": "invalid-formats-and-unsigned",
+      "slice": "validation-findings",
+      "input": {
+        "requestTitle": "Hồ sơ thử nghiệm D",
+        "requestType": "Tiếp nhận thử nghiệm",
+        "applicantReference": "BAD",
+        "submissionDate": "04-08-2026",
+        "signed": false,
+        "attachments": ["application_form", "supporting_document"]
+      },
+      "expectedMissing": []
+    },
+    {
+      "id": "warnings-only",
+      "slice": "validation-findings",
+      "input": {
+        "requestTitle": "Hồ sơ thử nghiệm E",
+        "requestType": "Tiếp nhận thử nghiệm",
+        "applicantReference": "DEMO-005",
+        "submissionDate": "2026/08/05",
+        "signed": false,
+        "attachments": ["application_form", "supporting_document"]
+      },
+      "expectedMissing": []
+    }
+  ],
+  "questions": [
+    { "id": "scope-dossier", "slice": "supported", "text": "Hồ sơ đang thiếu gì?", "expectedSupported": true },
+    { "id": "scope-citation", "slice": "supported", "text": "Cho tôi xem căn cứ và trích dẫn.", "expectedSupported": true },
+    { "id": "scope-status", "slice": "supported", "text": "Trạng thái đơn hiện tại là gì?", "expectedSupported": true },
+    { "id": "scope-weather", "slice": "unsupported", "text": "Dự báo thời tiết ngày mai", "expectedSupported": false },
+    { "id": "scope-stock", "slice": "unsupported", "text": "Giá cổ phiếu hôm nay", "expectedSupported": false },
+    { "id": "scope-travel", "slice": "unsupported", "text": "Lập lịch du lịch ba ngày", "expectedSupported": false }
+  ]
+}

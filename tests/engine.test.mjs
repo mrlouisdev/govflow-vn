@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { analyzeDossier, answerScope } from "../src/engine.mjs";
+import { analyzeDossier, answerScope, demoRuleset } from "../src/engine.mjs";
 
 const complete = {
   requestTitle: "Hồ sơ thử nghiệm A",
@@ -10,6 +10,10 @@ const complete = {
   signed: true,
   attachments: ["application_form", "supporting_document"]
 };
+
+function dossier(overrides = {}) {
+  return { ...complete, ...overrides };
+}
 
 test("complete dossier is ready", () => {
   const result = analyzeDossier(complete);
@@ -24,9 +28,87 @@ test("incomplete dossier produces cited findings", () => {
   assert.ok(result.findings.every((item) => item.citation));
 });
 
+test("a blank required value is treated as missing", () => {
+  const result = analyzeDossier(dossier({ requestTitle: " \t " }));
+  assert.equal(result.status, "needs_review");
+  assert.deepEqual(
+    result.findings.map((finding) => `${finding.code}:${finding.field}`),
+    ["MISSING_FIELD:requestTitle"]
+  );
+});
+
+test("a non-array attachment value is safely treated as no attachments", () => {
+  const result = analyzeDossier(dossier({ attachments: "application_form" }));
+  assert.deepEqual(
+    result.findings.map((finding) => finding.field),
+    ["application_form", "supporting_document"]
+  );
+});
+
+test("invalid reference is a blocking, cited error", () => {
+  const result = analyzeDossier(dossier({ applicantReference: "DEMO-12" }));
+  const finding = result.findings.find((item) => item.code === "INVALID_REFERENCE");
+  assert.equal(result.status, "needs_review");
+  assert.equal(finding?.citation, "GOVFLOW-DEMO-001 §3.1");
+});
+
+test("invalid date is a warning and does not block an otherwise complete dossier", () => {
+  const result = analyzeDossier(dossier({ submissionDate: "31-07-2026" }));
+  assert.equal(result.status, "ready");
+  assert.deepEqual(result.findings.map((finding) => finding.code), ["INVALID_DATE"]);
+});
+
+test("unsigned warning does not block an otherwise complete dossier", () => {
+  const result = analyzeDossier(dossier({ signed: false }));
+  assert.equal(result.status, "ready");
+  assert.deepEqual(result.findings.map((finding) => finding.code), ["UNSIGNED"]);
+});
+
+test("all required omissions map to the ruleset citations", () => {
+  const result = analyzeDossier({ signed: true, attachments: [] });
+  const expected = new Map(
+    [...demoRuleset.requiredFields, ...demoRuleset.requiredAttachments].map((rule) => [rule.key, rule.citation])
+  );
+  const missing = result.findings.filter((finding) => finding.code.startsWith("MISSING_"));
+  assert.equal(missing.length, expected.size);
+  for (const finding of missing) assert.equal(finding.citation, expected.get(finding.field));
+});
+
+test("audit metadata records the engine, timestamp, and checked rule count", () => {
+  const result = analyzeDossier(complete);
+  assert.equal(result.audit.engine, "govflow-deterministic-mvp/0.1.0");
+  assert.equal(result.audit.checkedRules, 9);
+  assert.ok(Number.isFinite(Date.parse(result.audit.evaluatedAt)));
+});
+
+test("custom rulesets expose their identity and rule count", () => {
+  const ruleset = {
+    id: "SYNTHETIC-CUSTOM-001",
+    title: "Custom synthetic rule",
+    notice: "Test only",
+    requiredFields: [{ key: "requestTitle", label: "Tên", citation: "SYNTHETIC-CUSTOM-001 §1" }],
+    requiredAttachments: []
+  };
+  const result = analyzeDossier({ requestTitle: "Mẫu", signed: true }, ruleset);
+  assert.equal(result.ruleset.id, ruleset.id);
+  assert.equal(result.audit.checkedRules, 4);
+  assert.equal(result.status, "ready");
+});
+
+test("supported scope terms are accepted case-insensitively", () => {
+  const result = answerScope("CHO TÔI XEM TRÍCH DẪN");
+  assert.equal(result.supported, true);
+  assert.match(result.message, /phạm vi ruleset demo/);
+});
+
 test("out-of-scope question is refused", () => {
   const result = answerScope("Dự báo thời tiết ngày mai");
   assert.equal(result.supported, false);
   assert.match(result.message, /Ngoài phạm vi/);
 });
 
+test("empty questions are refused instead of guessed", () => {
+  const result = answerScope("   ");
+  assert.equal(result.supported, false);
+  assert.match(result.message, /không suy đoán/);
+});

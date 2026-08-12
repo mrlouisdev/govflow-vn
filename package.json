@@ -3,13 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "license": "Apache-2.0",
   "description": "Auditable Vietnamese public-service dossier workflow prototype",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrlouisdev/govflow-vn.git"
+  },
+  "homepage": "https://mrlouisdev.github.io/govflow-vn/demo/",
+  "bugs": {
+    "url": "https://github.com/mrlouisdev/govflow-vn/issues"
+  },
+  "keywords": [
+    "vietnamese",
+    "public-service",
+    "document-validation",
+    "audit-trail",
+    "synthetic-evaluation"
+  ],
   "scripts": {
     "test": "node --test",
+    "benchmark": "node benchmarks/run.mjs",
     "serve": "node scripts/serve.mjs"
   },
   "engines": {
     "node": ">=20"
   }
 }
-

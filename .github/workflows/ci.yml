@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          if [[ -f package-lock.json || -f npm-shrinkwrap.json ]]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run benchmark when available
+        shell: bash
+        run: |
+          if node -e "const scripts = require('./package.json').scripts || {}; process.exit(scripts.benchmark ? 0 : 1)"; then
+            npm run benchmark
+          else
+            echo "No benchmark script defined; skipping."
+          fi
