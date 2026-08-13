@@ -24,28 +24,31 @@
         <button id="load-complete" class="secondary">Mẫu đầy đủ</button>
         <button id="load-incomplete" class="secondary">Mẫu có lỗi</button>
       </div>
-      <textarea id="dossier" spellcheck="false"></textarea>
+      <label for="dossier">Dữ liệu hồ sơ (JSON)</label>
+      <textarea id="dossier" spellcheck="false" aria-describedby="dossier-help"></textarea>
+      <p id="dossier-help" class="sr-only">Nhập một JSON object chứa thông tin hồ sơ mẫu.</p>
       <button id="analyze" class="primary">Phân tích hồ sơ</button>
     </section>
 
     <section class="panel">
       <h2>2. Kết quả có kiểm chứng</h2>
-      <div id="summary" class="summary neutral">Chưa chạy kiểm tra.</div>
-      <div id="findings" class="findings"></div>
+      <div id="summary" class="summary neutral" role="status" aria-live="polite">Chưa chạy kiểm tra.</div>
+      <div id="findings" class="findings" aria-label="Chi tiết kết quả"></div>
       <details>
         <summary>Audit trail</summary>
         <pre id="audit">—</pre>
       </details>
       <h3>Kiểm tra phạm vi câu hỏi</h3>
+      <label for="question">Câu hỏi cần kiểm tra</label>
       <div class="question-row">
         <input id="question" value="Hồ sơ còn thiếu giấy tờ nào?">
         <button id="ask" class="secondary">Kiểm tra</button>
       </div>
-      <p id="scope-answer" class="muted"></p>
+      <p id="scope-answer" class="muted" role="status" aria-live="polite"></p>
     </section>
   </main>
 
-  <footer>GovFlow deterministic workflow shell v0.1.0 · OCR/SLM adapters are roadmap items.</footer>
+  <footer>GovFlow deterministic workflow shell v0.2.0 · OCR contract shipped; OCR model/SLM adapters remain roadmap items.</footer>
   <script type="module" src="./app.js"></script>
 </body>
 </html>

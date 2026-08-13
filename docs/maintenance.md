@@ -13,19 +13,18 @@ This document separates shipped behavior from proposed work. Roadmap entries are
 
 ## Near-term maintenance
 
-- Expand the versioned synthetic evaluation slices while preserving expected-versus-actual evidence.
+- Add reviewed synthetic cases when a new rule or boundary is introduced; keep exact labels and deterministic hashes synchronized.
 - Review benchmark results for stability across supported Node.js versions and documented hardware.
 - Keep continuous integration aligned with the test and benchmark commands.
 - Tag releases with changelog and verification evidence.
 
 ## Research roadmap
 
-1. Define a versioned schema boundary for OCR output.
-2. Evaluate OCR adapters on licensed or synthetic Vietnamese document samples.
-3. Add an authoritative, versioned source-corpus interface.
-4. Evaluate Vietnamese SLM/RAG adapters for citation correctness and out-of-scope refusal.
-5. Measure latency and memory on documented local hardware.
-6. Complete privacy, security, accessibility, and operational reviews before any production-data pilot.
+1. Evaluate OCR implementations against the shipped adapter contract using licensed or synthetic Vietnamese document samples.
+2. Add an authoritative, versioned source-corpus interface.
+3. Evaluate Vietnamese SLM/RAG adapters for citation correctness and out-of-scope refusal.
+4. Measure latency and memory on documented local hardware.
+5. Complete privacy, security, accessibility, and operational reviews before any production-data pilot.
 
 ## Non-goals for the current MVP
 

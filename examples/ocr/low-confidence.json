@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1.0.0",
+  "documentId": "synthetic-ocr-low-confidence",
+  "synthetic": true,
+  "fields": {
+    "requestTitle": { "value": "Hồ sơ OCR thử nghiệm", "confidence": 0.99, "sources": [{ "page": 1, "blockId": "p1-title" }] },
+    "applicantReference": { "value": "DEMO-102", "confidence": 0.42, "sources": [{ "page": 1, "blockId": "p1-reference" }] }
+  }
+}

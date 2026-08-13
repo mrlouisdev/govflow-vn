@@ -30,9 +30,25 @@ function load(value) {
 function render(result) {
   summary.className = `summary ${result.status}`;
   summary.textContent = result.summary;
-  findings.innerHTML = result.findings.length
-    ? result.findings.map((item) => `<article class="finding ${item.severity}"><strong>${item.code}</strong><p>${item.message}</p><code>${item.citation}</code></article>`).join("")
-    : '<article class="finding success"><strong>PASS</strong><p>Không phát hiện lỗi trong ruleset demo.</p></article>';
+  findings.replaceChildren();
+  const items = result.findings.length
+    ? result.findings
+    : [{ severity: "success", code: "PASS", message: "Không phát hiện lỗi trong ruleset demo." }];
+  for (const item of items) {
+    const article = document.createElement("article");
+    article.className = `finding ${item.severity}`;
+    const code = document.createElement("strong");
+    code.textContent = item.code;
+    const message = document.createElement("p");
+    message.textContent = item.message;
+    article.append(code, message);
+    if (item.citation) {
+      const citation = document.createElement("code");
+      citation.textContent = item.citation;
+      article.append(citation);
+    }
+    findings.append(article);
+  }
   audit.textContent = JSON.stringify(result.audit, null, 2);
 }
 
@@ -44,6 +60,10 @@ document.querySelector("#analyze").addEventListener("click", () => {
   } catch (error) {
     summary.className = "summary needs_review";
     summary.textContent = `JSON không hợp lệ: ${error.message}`;
+    findings.replaceChildren();
+    audit.textContent = "—";
+    summary.setAttribute("tabindex", "-1");
+    summary.focus();
   }
 });
 document.querySelector("#ask").addEventListener("click", () => {

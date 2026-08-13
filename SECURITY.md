@@ -8,7 +8,7 @@ GovFlow VN is an early prototype. Security fixes are applied to the current `mai
 
 Do not open a public issue for an unpatched vulnerability or include sensitive dossier contents in public discussion.
 
-Use the repository Security tab's **Report a vulnerability** form when it is available. If that route is unavailable, contact the primary maintainer through a verified non-public channel listed on the maintainer's GitHub profile. Include:
+Use the repository Security tab's **Report a vulnerability** form when it is available. If that route is unavailable, contact the [primary maintainer](MAINTAINERS.md) through a verified non-public channel listed on the maintainer's GitHub profile. Include:
 
 - affected commit or version;
 - reproduction steps using synthetic data;

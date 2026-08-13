@@ -8,6 +8,7 @@ An evidence-first, offline prototype for auditable Vietnamese public-service dos
 - **Live demo:** https://mrlouisdev.github.io/govflow-vn/demo/
 - **Architecture:** [docs/architecture.md](docs/architecture.md)
 - **Evaluation protocol:** [docs/evaluation.md](docs/evaluation.md)
+- **OCR adapter contract:** [docs/ocr-adapter.md](docs/ocr-adapter.md)
 - **Roadmap and maintenance:** [docs/maintenance.md](docs/maintenance.md)
 
 ## Status and scope
@@ -21,7 +22,7 @@ GovFlow VN is currently a **deterministic offline MVP**, not a production admini
 5. refuse unsupported questions instead of guessing; and
 6. return an audit record for evaluation.
 
-OCR ingestion, Vietnamese SLM/RAG, authoritative procedure rulesets, and production deployment are roadmap items. They are not claimed as implemented features.
+An OCR adapter **contract** is implemented for synthetic or appropriately licensed extraction output. An OCR model, PDF/image extraction, Vietnamese SLM/RAG, authoritative procedure rulesets, and production deployment remain roadmap items. They are not claimed as implemented features.
 
 ## Why this repository exists
 
@@ -35,9 +36,11 @@ The longer-term research question is whether a small, local-first Vietnamese wor
 - Findings with source identifiers for each triggered rule.
 - Out-of-scope question guard.
 - Reproducible synthetic dossier samples.
-- Versioned synthetic benchmark dataset, harness, and machine-readable result.
-- Browser demo and automated Node.js tests.
-- Architecture and evaluation specifications for future OCR and Vietnamese SLM/RAG adapters.
+- A versioned OCR adapter boundary with machine-readable schemas, provenance, confidence gates, explicit failure states, and synthetic fixtures.
+- Versioned synthetic benchmark dataset, harness, deterministic verification artifact, executable-source hash manifest, and exact finding/citation/status/scope/OCR-provenance metrics.
+- Browser demo with accessible status output and automated Node.js tests.
+- A local demo server that allowlists public assets and refuses repository metadata or traversal requests.
+- Architecture and evaluation specifications for future OCR-model and Vietnamese SLM/RAG adapters.
 
 ## Reproduce locally
 
@@ -48,10 +51,10 @@ git clone https://github.com/mrlouisdev/govflow-vn.git
 cd govflow-vn
 node --version
 npm test
-npm run benchmark
+npm run benchmark:verify
 ```
 
-`npm test` must exit with code `0`. `npm run benchmark` writes the versioned result to `benchmarks/results/v0.1.0.json`; interpret it only as evidence for the bundled synthetic cases. To inspect the browser demo locally:
+`npm test` and `npm run benchmark:verify` must exit with code `0`. `npm run benchmark` regenerates the deterministic `benchmarks/results/v0.2.0.validation.json`; `npm run benchmark:runtime` separately writes a volatile environment-specific runtime observation. Interpret either only as evidence for the bundled synthetic cases. To inspect the browser demo locally:
 
 ```powershell
 npm run serve
@@ -64,6 +67,7 @@ Then open `http://127.0.0.1:8080/demo/`. Stop the server with `Ctrl+C`.
 ```text
 demo/       Browser UI
 examples/   Synthetic dossier samples
+schemas/    Machine-readable adapter contracts
 src/        Deterministic evaluation engine
 tests/      Automated tests
 benchmarks/ Versioned synthetic evaluation data, harness, and results
@@ -73,12 +77,12 @@ scripts/    Local run helpers
 
 ## Evaluation targets
 
-The published [evaluation protocol](docs/evaluation.md) defines missing-field recall, citation coverage and correctness, out-of-scope recall, latency, and memory measurements. Run `npm run benchmark` to regenerate the bundled synthetic evaluation result. A score should not be reported without its dataset version, engine version, and raw evaluation log.
+The published [evaluation protocol](docs/evaluation.md) defines exact finding precision/recall/F1, citation correctness, status accuracy, scope classification, slice evidence, latency, and memory observations. Run `npm run benchmark:verify` to validate the bundled deterministic result without rewriting it. A score should not be reported without its dataset version, engine version, and validation artifact.
 
 ## Limitations
 
 - Bundled dossiers and rules are synthetic and do not represent an official administrative procedure.
-- The MVP accepts structured JSON; it does not currently extract content from PDF files or images.
+- The MVP accepts structured JSON and versioned OCR-adapter output; it does not include an OCR model or extract content from PDF files or images.
 - Source identifiers refer to the synthetic demo ruleset, not Vietnamese legal authority.
 - The scope guard is deterministic and narrow; it is not a general hallucination detector.
 - No production privacy, identity, authorization, accessibility, or availability review has been completed.
@@ -88,7 +92,7 @@ The published [evaluation protocol](docs/evaluation.md) defines missing-field re
 
 The primary maintainer is [@mrlouisdev](https://github.com/mrlouisdev). Maintainer scope, review expectations, and the public roadmap are documented in [MAINTAINERS.md](MAINTAINERS.md) and [docs/maintenance.md](docs/maintenance.md).
 
-Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or pull request. For security-sensitive reports, follow [SECURITY.md](SECURITY.md). Changes are recorded in [CHANGELOG.md](CHANGELOG.md).
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before opening an issue or pull request. For security-sensitive reports, follow [SECURITY.md](SECURITY.md). Changes are recorded in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

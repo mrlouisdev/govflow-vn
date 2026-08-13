@@ -1,0 +1,61 @@
+name: Bug report
+description: Report a reproducible problem in implemented behavior
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Use synthetic data. Follow SECURITY.md for vulnerabilities.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Provide the release, branch, or commit SHA.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the observed behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Provide minimal steps and synthetic input.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Add relevant output or logs with sensitive data removed.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Node.js version, and browser if relevant.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing issues for a duplicate.
+          required: true
+        - label: This report uses synthetic, non-identifying data only.
+          required: true
+        - label: This is not an unpatched vulnerability report.
+          required: true

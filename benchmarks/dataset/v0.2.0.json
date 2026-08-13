@@ -1,0 +1,244 @@
+{
+  "id": "govflow-synthetic-eval-v0.2.0",
+  "version": "0.2.0",
+  "rulesetId": "GOVFLOW-DEMO-001",
+  "description": "Synthetic and adversarial cases for deterministic regression evaluation. No case represents an official Vietnamese procedure or production traffic.",
+  "dossiers": [
+    {
+      "id": "complete-valid", "slice": "complete",
+      "input": { "requestTitle": "Hồ sơ A", "requestType": "Tiếp nhận", "applicantReference": "DEMO-001", "submissionDate": "2026-08-01", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "ready", "expectedFindings": []
+    },
+    {
+      "id": "missing-request-title", "slice": "single-omission",
+      "input": { "requestType": "Tiếp nhận", "applicantReference": "DEMO-002", "submissionDate": "2026-08-02", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_FIELD", "field": "requestTitle", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.1" }
+      ]
+    },
+    {
+      "id": "missing-request-type", "slice": "single-omission",
+      "input": { "requestTitle": "Hồ sơ C", "applicantReference": "DEMO-003", "submissionDate": "2026-08-03", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_FIELD", "field": "requestType", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.2" }
+      ]
+    },
+    {
+      "id": "missing-applicant-reference", "slice": "single-omission",
+      "input": { "requestTitle": "Hồ sơ D", "requestType": "Tiếp nhận", "submissionDate": "2026-08-04", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_FIELD", "field": "applicantReference", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.3" }
+      ]
+    },
+    {
+      "id": "missing-submission-date", "slice": "single-omission",
+      "input": { "requestTitle": "Hồ sơ E", "requestType": "Tiếp nhận", "applicantReference": "DEMO-005", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_FIELD", "field": "submissionDate", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.4" }
+      ]
+    },
+    {
+      "id": "missing-application-form", "slice": "single-omission",
+      "input": { "requestTitle": "Hồ sơ F", "requestType": "Tiếp nhận", "applicantReference": "DEMO-006", "submissionDate": "2026-08-06", "signed": true, "attachments": ["supporting_document"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_ATTACHMENT", "field": "application_form", "severity": "error", "citation": "GOVFLOW-DEMO-001 §2.1" }
+      ]
+    },
+    {
+      "id": "missing-supporting-document", "slice": "single-omission",
+      "input": { "requestTitle": "Hồ sơ G", "requestType": "Tiếp nhận", "applicantReference": "DEMO-007", "submissionDate": "2026-08-07", "signed": true, "attachments": ["application_form"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_ATTACHMENT", "field": "supporting_document", "severity": "error", "citation": "GOVFLOW-DEMO-001 §2.2" }
+      ]
+    },
+    {
+      "id": "all-components-missing", "slice": "multiple-omissions", "input": {},
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_FIELD", "field": "requestTitle", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.1" },
+        { "code": "MISSING_FIELD", "field": "requestType", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.2" },
+        { "code": "MISSING_FIELD", "field": "applicantReference", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.3" },
+        { "code": "MISSING_FIELD", "field": "submissionDate", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.4" },
+        { "code": "MISSING_ATTACHMENT", "field": "application_form", "severity": "error", "citation": "GOVFLOW-DEMO-001 §2.1" },
+        { "code": "MISSING_ATTACHMENT", "field": "supporting_document", "severity": "error", "citation": "GOVFLOW-DEMO-001 §2.2" },
+        { "code": "UNSIGNED", "field": "signed", "severity": "warning", "citation": "GOVFLOW-DEMO-001 §4.1" }
+      ]
+    },
+    {
+      "id": "invalid-reference", "slice": "validation-findings",
+      "input": { "requestTitle": "Hồ sơ I", "requestType": "Tiếp nhận", "applicantReference": "DEMO-12", "submissionDate": "2026-08-09", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "INVALID_REFERENCE", "field": "applicantReference", "severity": "error", "citation": "GOVFLOW-DEMO-001 §3.1" }
+      ]
+    },
+    {
+      "id": "invalid-date-shape", "slice": "validation-findings",
+      "input": { "requestTitle": "Hồ sơ J", "requestType": "Tiếp nhận", "applicantReference": "DEMO-010", "submissionDate": "10/08/2026", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "ready", "expectedFindings": [
+        { "code": "INVALID_DATE", "field": "submissionDate", "severity": "warning", "citation": "GOVFLOW-DEMO-001 §3.2" }
+      ]
+    },
+    {
+      "id": "invalid-calendar-date", "slice": "boundary",
+      "input": { "requestTitle": "Hồ sơ K", "requestType": "Tiếp nhận", "applicantReference": "DEMO-011", "submissionDate": "2026-02-29", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "ready", "expectedFindings": [
+        { "code": "INVALID_DATE", "field": "submissionDate", "severity": "warning", "citation": "GOVFLOW-DEMO-001 §3.2" }
+      ]
+    },
+    {
+      "id": "valid-leap-date", "slice": "boundary",
+      "input": { "requestTitle": "Hồ sơ L", "requestType": "Tiếp nhận", "applicantReference": "DEMO-012", "submissionDate": "2024-02-29", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "ready", "expectedFindings": []
+    },
+    {
+      "id": "unsigned-warning-only", "slice": "boundary",
+      "input": { "requestTitle": "Hồ sơ M", "requestType": "Tiếp nhận", "applicantReference": "DEMO-013", "submissionDate": "2026-08-13", "signed": false, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "ready", "expectedFindings": [
+        { "code": "UNSIGNED", "field": "signed", "severity": "warning", "citation": "GOVFLOW-DEMO-001 §4.1" }
+      ]
+    },
+    {
+      "id": "conflicting-invalid-fields", "slice": "conflicting-field",
+      "input": { "requestTitle": "Hồ sơ N", "requestType": "Tiếp nhận", "applicantReference": "WRONG", "submissionDate": "2026-13-01", "signed": false, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "INVALID_REFERENCE", "field": "applicantReference", "severity": "error", "citation": "GOVFLOW-DEMO-001 §3.1" },
+        { "code": "INVALID_DATE", "field": "submissionDate", "severity": "warning", "citation": "GOVFLOW-DEMO-001 §3.2" },
+        { "code": "UNSIGNED", "field": "signed", "severity": "warning", "citation": "GOVFLOW-DEMO-001 §4.1" }
+      ]
+    },
+    {
+      "id": "whitespace-required-field", "slice": "boundary",
+      "input": { "requestTitle": "   ", "requestType": "Tiếp nhận", "applicantReference": "DEMO-015", "submissionDate": "2026-08-15", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_FIELD", "field": "requestTitle", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.1" }
+      ]
+    },
+    {
+      "id": "empty-attachment-list", "slice": "multiple-omissions",
+      "input": { "requestTitle": "Hồ sơ P", "requestType": "Tiếp nhận", "applicantReference": "DEMO-016", "submissionDate": "2026-08-16", "signed": true, "attachments": [] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_ATTACHMENT", "field": "application_form", "severity": "error", "citation": "GOVFLOW-DEMO-001 §2.1" },
+        { "code": "MISSING_ATTACHMENT", "field": "supporting_document", "severity": "error", "citation": "GOVFLOW-DEMO-001 §2.2" }
+      ]
+    },
+    {
+      "id": "ruleset-v2-complete", "slice": "ruleset-version",
+      "ruleset": { "id": "GOVFLOW-DEMO-002", "title": "Synthetic v2", "notice": "Synthetic version boundary.", "requiredFields": [{ "key": "agencyCode", "label": "Mã cơ quan", "citation": "GOVFLOW-DEMO-002 §1.1" }], "requiredAttachments": [{ "key": "consent_form", "label": "Phiếu đồng ý", "citation": "GOVFLOW-DEMO-002 §2.1" }] },
+      "input": { "agencyCode": "AGENCY-1", "signed": true, "attachments": ["consent_form"] },
+      "expectedStatus": "ready", "expectedFindings": []
+    },
+    {
+      "id": "ruleset-v2-missing-new-components", "slice": "ruleset-version",
+      "ruleset": { "id": "GOVFLOW-DEMO-002", "title": "Synthetic v2", "notice": "Synthetic version boundary.", "requiredFields": [{ "key": "agencyCode", "label": "Mã cơ quan", "citation": "GOVFLOW-DEMO-002 §1.1" }], "requiredAttachments": [{ "key": "consent_form", "label": "Phiếu đồng ý", "citation": "GOVFLOW-DEMO-002 §2.1" }] },
+      "input": { "signed": true, "attachments": [] },
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_FIELD", "field": "agencyCode", "severity": "error", "citation": "GOVFLOW-DEMO-002 §1.1" },
+        { "code": "MISSING_ATTACHMENT", "field": "consent_form", "severity": "error", "citation": "GOVFLOW-DEMO-002 §2.1" }
+      ]
+    },
+    {
+      "id": "duplicate-attachments", "slice": "boundary",
+      "input": { "requestTitle": "Hồ sơ S", "requestType": "Tiếp nhận", "applicantReference": "DEMO-019", "submissionDate": "2026-08-19", "signed": true, "attachments": ["application_form", "application_form", "supporting_document"] },
+      "expectedStatus": "ready", "expectedFindings": []
+    },
+    {
+      "id": "null-dossier", "slice": "adversarial-type", "input": null,
+      "expectedStatus": "needs_review", "expectedFindings": [
+        { "code": "MISSING_FIELD", "field": "requestTitle", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.1" },
+        { "code": "MISSING_FIELD", "field": "requestType", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.2" },
+        { "code": "MISSING_FIELD", "field": "applicantReference", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.3" },
+        { "code": "MISSING_FIELD", "field": "submissionDate", "severity": "error", "citation": "GOVFLOW-DEMO-001 §1.4" },
+        { "code": "MISSING_ATTACHMENT", "field": "application_form", "severity": "error", "citation": "GOVFLOW-DEMO-001 §2.1" },
+        { "code": "MISSING_ATTACHMENT", "field": "supporting_document", "severity": "error", "citation": "GOVFLOW-DEMO-001 §2.2" },
+        { "code": "UNSIGNED", "field": "signed", "severity": "warning", "citation": "GOVFLOW-DEMO-001 §4.1" }
+      ]
+    }
+  ],
+  "ocrCases": [
+    {
+      "id": "ocr-complete-with-provenance",
+      "slice": "ocr-success",
+      "minimumConfidence": 0.75,
+      "input": {
+        "contractVersion": "1.0.0",
+        "documentId": "synthetic-benchmark-ocr-complete",
+        "synthetic": true,
+        "fields": {
+          "requestTitle": { "value": "Hồ sơ OCR benchmark", "confidence": 0.99, "sources": [{ "page": 1, "blockId": "p1-title", "locator": "bbox:40,60,520,92" }] },
+          "requestType": { "value": "Tiếp nhận thử nghiệm", "confidence": 0.98, "sources": [{ "page": 1, "blockId": "p1-type" }] },
+          "applicantReference": { "value": "DEMO-201", "confidence": 0.97, "sources": [{ "page": 1, "blockId": "p1-reference" }] },
+          "submissionDate": { "value": "2026-08-13", "confidence": 0.96, "sources": [{ "page": 1, "blockId": "p1-date" }] },
+          "signed": { "value": true, "confidence": 0.95, "sources": [{ "page": 2, "blockId": "p2-signature" }] },
+          "attachments": { "value": ["application_form", "supporting_document"], "confidence": 0.94, "sources": [{ "page": 1, "blockId": "p1-attachments" }] }
+        }
+      },
+      "expectedStatus": "ready",
+      "expectedDossier": { "requestTitle": "Hồ sơ OCR benchmark", "requestType": "Tiếp nhận thử nghiệm", "applicantReference": "DEMO-201", "submissionDate": "2026-08-13", "signed": true, "attachments": ["application_form", "supporting_document"] },
+      "expectedFailures": [],
+      "expectedProvenance": {
+        "requestTitle": { "confidence": 0.99, "sources": [{ "page": 1, "blockId": "p1-title", "locator": "bbox:40,60,520,92" }] },
+        "requestType": { "confidence": 0.98, "sources": [{ "page": 1, "blockId": "p1-type" }] },
+        "applicantReference": { "confidence": 0.97, "sources": [{ "page": 1, "blockId": "p1-reference" }] },
+        "submissionDate": { "confidence": 0.96, "sources": [{ "page": 1, "blockId": "p1-date" }] },
+        "signed": { "confidence": 0.95, "sources": [{ "page": 2, "blockId": "p2-signature" }] },
+        "attachments": { "confidence": 0.94, "sources": [{ "page": 1, "blockId": "p1-attachments" }] }
+      },
+      "expectedAudit": { "adapter": "govflow-ocr-contract/0.2.0", "contractVersion": "1.0.0", "minimumConfidence": 0.75, "documentId": "synthetic-benchmark-ocr-complete", "extractedFields": 6, "rejectedFields": 0 }
+    },
+    {
+      "id": "ocr-missing-text",
+      "slice": "ocr-failure",
+      "minimumConfidence": 0.75,
+      "input": {
+        "contractVersion": "1.0.0",
+        "documentId": "synthetic-benchmark-ocr-missing-text",
+        "synthetic": true,
+        "fields": {
+          "requestTitle": { "value": "   ", "confidence": 0.91, "sources": [{ "page": 1, "blockId": "p1-title" }] },
+          "requestType": { "value": "Tiếp nhận thử nghiệm", "confidence": 0.98, "sources": [{ "page": 1, "blockId": "p1-type" }] }
+        }
+      },
+      "expectedStatus": "needs_review",
+      "expectedDossier": { "requestType": "Tiếp nhận thử nghiệm" },
+      "expectedFailures": [{ "code": "MISSING_TEXT", "field": "requestTitle" }],
+      "expectedProvenance": { "requestType": { "confidence": 0.98, "sources": [{ "page": 1, "blockId": "p1-type" }] } },
+      "expectedAudit": { "adapter": "govflow-ocr-contract/0.2.0", "contractVersion": "1.0.0", "minimumConfidence": 0.75, "documentId": "synthetic-benchmark-ocr-missing-text", "extractedFields": 1, "rejectedFields": 1 }
+    },
+    {
+      "id": "ocr-low-confidence",
+      "slice": "ocr-confidence",
+      "minimumConfidence": 0.75,
+      "input": {
+        "contractVersion": "1.0.0",
+        "documentId": "synthetic-benchmark-ocr-low-confidence",
+        "synthetic": true,
+        "fields": {
+          "requestTitle": { "value": "Hồ sơ OCR benchmark", "confidence": 0.99, "sources": [{ "page": 1, "blockId": "p1-title" }] },
+          "applicantReference": { "value": "DEMO-202", "confidence": 0.42, "sources": [{ "page": 1, "blockId": "p1-reference" }] }
+        }
+      },
+      "expectedStatus": "needs_review",
+      "expectedDossier": { "requestTitle": "Hồ sơ OCR benchmark" },
+      "expectedFailures": [{ "code": "LOW_CONFIDENCE", "field": "applicantReference" }],
+      "expectedProvenance": { "requestTitle": { "confidence": 0.99, "sources": [{ "page": 1, "blockId": "p1-title" }] } },
+      "expectedAudit": { "adapter": "govflow-ocr-contract/0.2.0", "contractVersion": "1.0.0", "minimumConfidence": 0.75, "documentId": "synthetic-benchmark-ocr-low-confidence", "extractedFields": 1, "rejectedFields": 1 }
+    }
+  ],
+  "questions": [
+    { "id": "scope-dossier", "slice": "supported", "text": "Hồ sơ đang thiếu gì?", "expectedSupported": true },
+    { "id": "scope-documents", "slice": "supported", "text": "Cần giấy tờ nào?", "expectedSupported": true },
+    { "id": "scope-citation", "slice": "supported", "text": "Cho tôi xem căn cứ và trích dẫn.", "expectedSupported": true },
+    { "id": "scope-reference", "slice": "supported", "text": "Mã tham chiếu đúng chưa?", "expectedSupported": true },
+    { "id": "scope-attachment", "slice": "supported", "text": "Có đính kèm đủ không?", "expectedSupported": true },
+    { "id": "scope-date", "slice": "supported", "text": "Ngày tiếp nhận là ngày nào?", "expectedSupported": true },
+    { "id": "scope-signature", "slice": "supported", "text": "Đơn đã ký chưa?", "expectedSupported": true },
+    { "id": "scope-ruleset", "slice": "supported", "text": "Ruleset hiện dùng là gì?", "expectedSupported": true },
+    { "id": "scope-weather", "slice": "unsupported", "text": "Dự báo thời tiết ngày mai", "expectedSupported": false },
+    { "id": "scope-stock", "slice": "unsupported", "text": "Giá cổ phiếu hôm nay", "expectedSupported": false },
+    { "id": "scope-travel", "slice": "unsupported", "text": "Lập lịch du lịch ba ngày", "expectedSupported": false },
+    { "id": "scope-empty", "slice": "boundary", "text": "   ", "expectedSupported": false },
+    { "id": "scope-confusable-hosox", "slice": "scope-confusable", "text": "hosox là tên biến", "expectedSupported": false },
+    { "id": "scope-confusable-tailieux", "slice": "scope-confusable", "text": "tài liệux là nhãn giả", "expectedSupported": false },
+    { "id": "scope-confusable-rulesetter", "slice": "scope-confusable", "text": "rulesetter configuration", "expectedSupported": false },
+    { "id": "scope-confusable-generic-form", "slice": "scope-confusable", "text": "đơn xin nghỉ phép", "expectedSupported": false }
+  ]
+}

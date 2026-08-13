@@ -13,7 +13,9 @@ flowchart LR
     H --> I[Audit trail and evaluation]
 ```
 
-The current MVP implements the schema boundary, deterministic checks, citation attachment, scope guard and audit output. OCR and DSLM/RAG are explicit adapters so they can be evaluated independently.
+The current MVP implements the structured dossier boundary, a versioned OCR-adapter contract, deterministic checks, citation attachment, scope guard, and audit output. The OCR contract validates extraction output, confidence, and provenance; it is not an OCR model. OCR models and DSLM/RAG remain explicit adapters so they can be evaluated independently.
+
+The implemented OCR boundary is documented in [ocr-adapter.md](ocr-adapter.md) with machine-readable schemas under [`schemas/`](../schemas/).
 
 ## Design constraints
 

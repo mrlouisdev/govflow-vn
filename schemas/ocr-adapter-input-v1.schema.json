@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mrlouisdev/govflow-vn/schemas/ocr-adapter-input-v1.schema.json",
+  "title": "GovFlow OCR adapter input v1",
+  "type": "object",
+  "required": ["contractVersion", "documentId", "fields"],
+  "properties": {
+    "contractVersion": { "const": "1.0.0" },
+    "documentId": { "$ref": "#/$defs/nonBlankString" },
+    "synthetic": { "type": "boolean" },
+    "fields": {
+      "type": "object",
+      "properties": {
+        "requestTitle": { "$ref": "#/$defs/stringField" },
+        "requestType": { "$ref": "#/$defs/stringField" },
+        "applicantReference": { "$ref": "#/$defs/stringField" },
+        "submissionDate": { "$ref": "#/$defs/stringField" },
+        "signed": { "$ref": "#/$defs/booleanField" },
+        "attachments": { "$ref": "#/$defs/stringArrayField" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["page", "blockId"],
+      "properties": {
+        "page": { "type": "integer", "minimum": 1 },
+        "blockId": { "$ref": "#/$defs/nonBlankString" },
+        "locator": { "$ref": "#/$defs/nonBlankString" }
+      },
+      "additionalProperties": false
+    },
+    "nonBlankString": {
+      "type": "string",
+      "pattern": "\\S"
+    },
+    "stringField": {
+      "type": "object",
+      "required": ["value", "confidence", "sources"],
+      "properties": {
+        "value": { "$ref": "#/$defs/nonBlankString" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } }
+      },
+      "additionalProperties": false
+    },
+    "booleanField": {
+      "type": "object",
+      "required": ["value", "confidence", "sources"],
+      "properties": {
+        "value": { "type": "boolean" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } }
+      },
+      "additionalProperties": false
+    },
+    "stringArrayField": {
+      "type": "object",
+      "required": ["value", "confidence", "sources"],
+      "properties": {
+        "value": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonBlankString" } },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}

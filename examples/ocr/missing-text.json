@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1.0.0",
+  "documentId": "synthetic-ocr-missing-text",
+  "synthetic": true,
+  "fields": {
+    "requestTitle": { "value": "   ", "confidence": 0.91, "sources": [{ "page": 1, "blockId": "p1-title" }] },
+    "requestType": { "value": "Tiếp nhận thử nghiệm", "confidence": 0.98, "sources": [{ "page": 1, "blockId": "p1-type" }] }
+  }
+}

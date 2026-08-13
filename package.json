@@ -1,6 +1,6 @@
 {
   "name": "govflow-vn",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "license": "Apache-2.0",
@@ -23,6 +23,8 @@
   "scripts": {
     "test": "node --test",
     "benchmark": "node benchmarks/run.mjs",
+    "benchmark:verify": "node benchmarks/run.mjs --verify",
+    "benchmark:runtime": "node benchmarks/run.mjs --runtime",
     "serve": "node scripts/serve.mjs"
   },
   "engines": {

@@ -1,0 +1,46 @@
+name: Feature request
+description: Propose a focused improvement to implemented behavior
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: User need
+      description: What concrete problem should this solve, and for whom?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest useful change and its boundaries.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance evidence
+      description: List observable outcomes or tests that demonstrate completion.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: textarea
+    id: risks
+    attributes:
+      label: Audit, privacy, or compatibility impact
+      description: Note effects on citations, audit fields, rulesets, privacy, or consumers.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing issues for a duplicate.
+          required: true
+        - label: Any example data is synthetic and non-identifying.
+          required: true

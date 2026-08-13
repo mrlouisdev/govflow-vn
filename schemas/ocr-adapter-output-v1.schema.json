@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mrlouisdev/govflow-vn/schemas/ocr-adapter-output-v1.schema.json",
+  "title": "GovFlow OCR adapter output v1",
+  "type": "object",
+  "required": ["status", "dossier", "provenance", "failures", "audit"],
+  "properties": {
+    "status": { "enum": ["ready", "needs_review", "invalid"] },
+    "dossier": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/dossier" }
+      ]
+    },
+    "provenance": { "$ref": "#/$defs/provenance" },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "field", "message"],
+        "properties": {
+          "code": {
+            "enum": ["INVALID_INPUT", "UNSUPPORTED_CONTRACT_VERSION", "INVALID_ENVELOPE", "UNSUPPORTED_FIELD", "MALFORMED_FIELD", "MISSING_TEXT", "MISSING_PROVENANCE", "LOW_CONFIDENCE"]
+          },
+          "field": {
+            "oneOf": [
+              { "type": "null" },
+              { "$ref": "#/$defs/nonBlankString" }
+            ]
+          },
+          "message": { "$ref": "#/$defs/nonBlankString" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "audit": {
+      "type": "object",
+      "required": ["adapter", "contractVersion", "minimumConfidence", "documentId", "extractedFields", "rejectedFields"],
+      "properties": {
+        "adapter": { "const": "govflow-ocr-contract/0.2.0" },
+        "contractVersion": { "const": "1.0.0" },
+        "minimumConfidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "documentId": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/nonBlankString" }
+          ]
+        },
+        "extractedFields": { "type": "integer", "minimum": 0 },
+        "rejectedFields": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "invalid" } }, "required": ["status"] },
+      "then": { "properties": { "dossier": { "type": "null" } } },
+      "else": { "properties": { "dossier": { "$ref": "#/$defs/dossier" } } }
+    }
+  ],
+  "$defs": {
+    "nonBlankString": { "type": "string", "pattern": "\\S" },
+    "source": {
+      "type": "object",
+      "required": ["page", "blockId"],
+      "properties": {
+        "page": { "type": "integer", "minimum": 1 },
+        "blockId": { "$ref": "#/$defs/nonBlankString" },
+        "locator": { "$ref": "#/$defs/nonBlankString" }
+      },
+      "additionalProperties": false
+    },
+    "provenanceRecord": {
+      "type": "object",
+      "required": ["confidence", "sources"],
+      "properties": {
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } }
+      },
+      "additionalProperties": false
+    },
+    "dossier": {
+      "type": "object",
+      "properties": {
+        "requestTitle": { "$ref": "#/$defs/nonBlankString" },
+        "requestType": { "$ref": "#/$defs/nonBlankString" },
+        "applicantReference": { "$ref": "#/$defs/nonBlankString" },
+        "submissionDate": { "$ref": "#/$defs/nonBlankString" },
+        "signed": { "type": "boolean" },
+        "attachments": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/nonBlankString" } }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "requestTitle": { "$ref": "#/$defs/provenanceRecord" },
+        "requestType": { "$ref": "#/$defs/provenanceRecord" },
+        "applicantReference": { "$ref": "#/$defs/provenanceRecord" },
+        "submissionDate": { "$ref": "#/$defs/provenanceRecord" },
+        "signed": { "$ref": "#/$defs/provenanceRecord" },
+        "attachments": { "$ref": "#/$defs/provenanceRecord" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

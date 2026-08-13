@@ -1,0 +1,1625 @@
+{
+  "schemaVersion": "2.1.0",
+  "dataset": {
+    "id": "govflow-synthetic-eval-v0.2.0",
+    "version": "0.2.0",
+    "rulesetId": "GOVFLOW-DEMO-001",
+    "dossierCases": 20,
+    "ocrCases": 3,
+    "questionCases": 16,
+    "synthetic": true,
+    "sha256": "f0c1ba714552154665a660c057585d61a37a945f8d9137c7fa362db3139bc7f8"
+  },
+  "engine": {
+    "id": "govflow-deterministic-mvp/0.2.0",
+    "algorithm": "sha256",
+    "canonicalization": "UTF-8 text with CRLF and CR normalized to LF; source manifest sorted by path.",
+    "sha256": "e5889634e1bd349b501a31d87dae555dbbbace12e326faf2e2cd4b403baecef3",
+    "sources": [
+      {
+        "path": "benchmarks/run.mjs",
+        "sha256": "2ac32bf0b8d79262c2c3734ee0740d2ed73ee67f2234f03e270b6d39017e5292"
+      },
+      {
+        "path": "src/engine.mjs",
+        "sha256": "d420bc43d105981f8efb65cbfe9228c040d20151e1a945110bf8387cd30d0c30"
+      },
+      {
+        "path": "src/ocr-adapter.mjs",
+        "sha256": "1f23db546a79941187d98b9c653850983c040a8d8bb583d775aec6c68f4a55ff"
+      }
+    ]
+  },
+  "evaluationSha256": "bbab670d4ca53467616d3b7a0f85c2d7cb461f3834c8f3e8104646bf96ddd115",
+  "methodology": {
+    "findingDetection": "Micro precision, recall, and F1 over exact code+field+severity+citation finding tuples.",
+    "missingFieldDetection": "Precision and recall over labeled required-field and required-attachment omission code+field pairs.",
+    "citationCorrectness": "Exact citation equality for each emitted finding matched by code+field+severity.",
+    "citationCoverage": "Emitted findings with a non-empty citation string / all emitted findings; exact correctness is reported separately.",
+    "statusAccuracy": "Exact ready/needs_review equality per dossier.",
+    "scopeClassification": "Precision, recall, F1, and accuracy for supported=true, including lexical-confusable negatives.",
+    "outOfScopeRefusal": "Labeled unsupported questions refused / all labeled unsupported questions; supported acceptance is reported separately.",
+    "ocrAdapter": "Exact status, promoted dossier, failure tuple, audit, and field-level confidence/source provenance equality.",
+    "slices": "Per-slice case IDs, counts, and exact-case accuracy. All fixtures are synthetic."
+  },
+  "metrics": {
+    "findingDetection": {
+      "truePositiveFindings": 32,
+      "expectedFindings": 32,
+      "actualFindings": 32,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "missingFieldDetection": {
+      "knownOmissions": 23,
+      "detectedOmissions": 23,
+      "reportedOmissions": 23,
+      "recall": 1,
+      "precision": 1
+    },
+    "exactCitationCorrectness": {
+      "correctCitations": 32,
+      "actualFindings": 32,
+      "accuracy": 1
+    },
+    "citationCoverage": {
+      "citedFindings": 32,
+      "totalFindings": 32,
+      "coverage": 1
+    },
+    "statusAccuracy": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1
+    },
+    "scopeClassification": {
+      "truePositive": 8,
+      "trueNegative": 8,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "accuracy": 1
+    },
+    "outOfScopeRefusal": {
+      "unsupportedQuestions": 8,
+      "refusedUnsupported": 8,
+      "recall": 1,
+      "supportedQuestions": 8,
+      "acceptedSupported": 8,
+      "inScopeAcceptance": 1
+    },
+    "ocrAdapter": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 1,
+      "provenanceCorrect": 3,
+      "provenanceAccuracy": 1
+    }
+  },
+  "sliceEvidence": {
+    "adversarial-type": {
+      "cases": 1,
+      "correct": 1,
+      "accuracy": 1,
+      "caseIds": [
+        "null-dossier"
+      ]
+    },
+    "boundary": {
+      "cases": 6,
+      "correct": 6,
+      "accuracy": 1,
+      "caseIds": [
+        "invalid-calendar-date",
+        "valid-leap-date",
+        "unsigned-warning-only",
+        "whitespace-required-field",
+        "duplicate-attachments",
+        "scope-empty"
+      ]
+    },
+    "complete": {
+      "cases": 1,
+      "correct": 1,
+      "accuracy": 1,
+      "caseIds": [
+        "complete-valid"
+      ]
+    },
+    "conflicting-field": {
+      "cases": 1,
+      "correct": 1,
+      "accuracy": 1,
+      "caseIds": [
+        "conflicting-invalid-fields"
+      ]
+    },
+    "multiple-omissions": {
+      "cases": 2,
+      "correct": 2,
+      "accuracy": 1,
+      "caseIds": [
+        "all-components-missing",
+        "empty-attachment-list"
+      ]
+    },
+    "ocr-confidence": {
+      "cases": 1,
+      "correct": 1,
+      "accuracy": 1,
+      "caseIds": [
+        "ocr-low-confidence"
+      ]
+    },
+    "ocr-failure": {
+      "cases": 1,
+      "correct": 1,
+      "accuracy": 1,
+      "caseIds": [
+        "ocr-missing-text"
+      ]
+    },
+    "ocr-success": {
+      "cases": 1,
+      "correct": 1,
+      "accuracy": 1,
+      "caseIds": [
+        "ocr-complete-with-provenance"
+      ]
+    },
+    "ruleset-version": {
+      "cases": 2,
+      "correct": 2,
+      "accuracy": 1,
+      "caseIds": [
+        "ruleset-v2-complete",
+        "ruleset-v2-missing-new-components"
+      ]
+    },
+    "scope-confusable": {
+      "cases": 4,
+      "correct": 4,
+      "accuracy": 1,
+      "caseIds": [
+        "scope-confusable-hosox",
+        "scope-confusable-tailieux",
+        "scope-confusable-rulesetter",
+        "scope-confusable-generic-form"
+      ]
+    },
+    "single-omission": {
+      "cases": 6,
+      "correct": 6,
+      "accuracy": 1,
+      "caseIds": [
+        "missing-request-title",
+        "missing-request-type",
+        "missing-applicant-reference",
+        "missing-submission-date",
+        "missing-application-form",
+        "missing-supporting-document"
+      ]
+    },
+    "supported": {
+      "cases": 8,
+      "correct": 8,
+      "accuracy": 1,
+      "caseIds": [
+        "scope-dossier",
+        "scope-documents",
+        "scope-citation",
+        "scope-reference",
+        "scope-attachment",
+        "scope-date",
+        "scope-signature",
+        "scope-ruleset"
+      ]
+    },
+    "unsupported": {
+      "cases": 3,
+      "correct": 3,
+      "accuracy": 1,
+      "caseIds": [
+        "scope-weather",
+        "scope-stock",
+        "scope-travel"
+      ]
+    },
+    "validation-findings": {
+      "cases": 2,
+      "correct": 2,
+      "accuracy": 1,
+      "caseIds": [
+        "invalid-reference",
+        "invalid-date-shape"
+      ]
+    }
+  },
+  "cases": {
+    "dossiers": [
+      {
+        "id": "complete-valid",
+        "slice": "complete",
+        "expectedStatus": "ready",
+        "actualStatus": "ready",
+        "statusCorrect": true,
+        "expectedFindings": [],
+        "actualFindings": [],
+        "matchedFindings": 0,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 0,
+        "exact": true
+      },
+      {
+        "id": "missing-request-title",
+        "slice": "single-omission",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.1"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle"
+          }
+        ],
+        "matchedOmissions": 1,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "missing-request-type",
+        "slice": "single-omission",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.2"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.2"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType"
+          }
+        ],
+        "matchedOmissions": 1,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "missing-applicant-reference",
+        "slice": "single-omission",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.3"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.3"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference"
+          }
+        ],
+        "matchedOmissions": 1,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "missing-submission-date",
+        "slice": "single-omission",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.4"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.4"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate"
+          }
+        ],
+        "matchedOmissions": 1,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "missing-application-form",
+        "slice": "single-omission",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.1"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form"
+          }
+        ],
+        "matchedOmissions": 1,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "missing-supporting-document",
+        "slice": "single-omission",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.2"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.2"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document"
+          }
+        ],
+        "matchedOmissions": 1,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "all-components-missing",
+        "slice": "multiple-omissions",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.1"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.2"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.3"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.4"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.1"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.2"
+          },
+          {
+            "code": "UNSIGNED",
+            "field": "signed",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §4.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.1"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.2"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.3"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.4"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.1"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.2"
+          },
+          {
+            "code": "UNSIGNED",
+            "field": "signed",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §4.1"
+          }
+        ],
+        "matchedFindings": 7,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document"
+          }
+        ],
+        "matchedOmissions": 6,
+        "correctCitations": 7,
+        "exact": true
+      },
+      {
+        "id": "invalid-reference",
+        "slice": "validation-findings",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "INVALID_REFERENCE",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §3.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "INVALID_REFERENCE",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §3.1"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "invalid-date-shape",
+        "slice": "validation-findings",
+        "expectedStatus": "ready",
+        "actualStatus": "ready",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "INVALID_DATE",
+            "field": "submissionDate",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §3.2"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "INVALID_DATE",
+            "field": "submissionDate",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §3.2"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "invalid-calendar-date",
+        "slice": "boundary",
+        "expectedStatus": "ready",
+        "actualStatus": "ready",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "INVALID_DATE",
+            "field": "submissionDate",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §3.2"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "INVALID_DATE",
+            "field": "submissionDate",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §3.2"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "valid-leap-date",
+        "slice": "boundary",
+        "expectedStatus": "ready",
+        "actualStatus": "ready",
+        "statusCorrect": true,
+        "expectedFindings": [],
+        "actualFindings": [],
+        "matchedFindings": 0,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 0,
+        "exact": true
+      },
+      {
+        "id": "unsigned-warning-only",
+        "slice": "boundary",
+        "expectedStatus": "ready",
+        "actualStatus": "ready",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "UNSIGNED",
+            "field": "signed",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §4.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "UNSIGNED",
+            "field": "signed",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §4.1"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "conflicting-invalid-fields",
+        "slice": "conflicting-field",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "INVALID_REFERENCE",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §3.1"
+          },
+          {
+            "code": "INVALID_DATE",
+            "field": "submissionDate",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §3.2"
+          },
+          {
+            "code": "UNSIGNED",
+            "field": "signed",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §4.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "INVALID_REFERENCE",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §3.1"
+          },
+          {
+            "code": "INVALID_DATE",
+            "field": "submissionDate",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §3.2"
+          },
+          {
+            "code": "UNSIGNED",
+            "field": "signed",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §4.1"
+          }
+        ],
+        "matchedFindings": 3,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 3,
+        "exact": true
+      },
+      {
+        "id": "whitespace-required-field",
+        "slice": "boundary",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.1"
+          }
+        ],
+        "matchedFindings": 1,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle"
+          }
+        ],
+        "matchedOmissions": 1,
+        "correctCitations": 1,
+        "exact": true
+      },
+      {
+        "id": "empty-attachment-list",
+        "slice": "multiple-omissions",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.1"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.2"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.1"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.2"
+          }
+        ],
+        "matchedFindings": 2,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document"
+          }
+        ],
+        "matchedOmissions": 2,
+        "correctCitations": 2,
+        "exact": true
+      },
+      {
+        "id": "ruleset-v2-complete",
+        "slice": "ruleset-version",
+        "expectedStatus": "ready",
+        "actualStatus": "ready",
+        "statusCorrect": true,
+        "expectedFindings": [],
+        "actualFindings": [],
+        "matchedFindings": 0,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 0,
+        "exact": true
+      },
+      {
+        "id": "ruleset-v2-missing-new-components",
+        "slice": "ruleset-version",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "agencyCode",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-002 §1.1"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "consent_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-002 §2.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "agencyCode",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-002 §1.1"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "consent_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-002 §2.1"
+          }
+        ],
+        "matchedFindings": 2,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "agencyCode"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "consent_form"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "agencyCode"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "consent_form"
+          }
+        ],
+        "matchedOmissions": 2,
+        "correctCitations": 2,
+        "exact": true
+      },
+      {
+        "id": "duplicate-attachments",
+        "slice": "boundary",
+        "expectedStatus": "ready",
+        "actualStatus": "ready",
+        "statusCorrect": true,
+        "expectedFindings": [],
+        "actualFindings": [],
+        "matchedFindings": 0,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [],
+        "actualOmissions": [],
+        "matchedOmissions": 0,
+        "correctCitations": 0,
+        "exact": true
+      },
+      {
+        "id": "null-dossier",
+        "slice": "adversarial-type",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.1"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.2"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.3"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.4"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.1"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.2"
+          },
+          {
+            "code": "UNSIGNED",
+            "field": "signed",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §4.1"
+          }
+        ],
+        "actualFindings": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.1"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.2"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.3"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §1.4"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.1"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document",
+            "severity": "error",
+            "citation": "GOVFLOW-DEMO-001 §2.2"
+          },
+          {
+            "code": "UNSIGNED",
+            "field": "signed",
+            "severity": "warning",
+            "citation": "GOVFLOW-DEMO-001 §4.1"
+          }
+        ],
+        "matchedFindings": 7,
+        "missedExpected": [],
+        "unexpectedActual": [],
+        "expectedOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document"
+          }
+        ],
+        "actualOmissions": [
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestTitle"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "requestType"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "applicantReference"
+          },
+          {
+            "code": "MISSING_FIELD",
+            "field": "submissionDate"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "application_form"
+          },
+          {
+            "code": "MISSING_ATTACHMENT",
+            "field": "supporting_document"
+          }
+        ],
+        "matchedOmissions": 6,
+        "correctCitations": 7,
+        "exact": true
+      }
+    ],
+    "ocr": [
+      {
+        "id": "ocr-complete-with-provenance",
+        "slice": "ocr-success",
+        "expectedStatus": "ready",
+        "actualStatus": "ready",
+        "statusCorrect": true,
+        "expectedDossier": {
+          "requestTitle": "Hồ sơ OCR benchmark",
+          "requestType": "Tiếp nhận thử nghiệm",
+          "applicantReference": "DEMO-201",
+          "submissionDate": "2026-08-13",
+          "signed": true,
+          "attachments": [
+            "application_form",
+            "supporting_document"
+          ]
+        },
+        "actualDossier": {
+          "requestTitle": "Hồ sơ OCR benchmark",
+          "requestType": "Tiếp nhận thử nghiệm",
+          "applicantReference": "DEMO-201",
+          "submissionDate": "2026-08-13",
+          "signed": true,
+          "attachments": [
+            "application_form",
+            "supporting_document"
+          ]
+        },
+        "dossierCorrect": true,
+        "expectedFailures": [],
+        "actualFailures": [],
+        "failuresCorrect": true,
+        "expectedProvenance": {
+          "requestTitle": {
+            "confidence": 0.99,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-title",
+                "locator": "bbox:40,60,520,92"
+              }
+            ]
+          },
+          "requestType": {
+            "confidence": 0.98,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-type"
+              }
+            ]
+          },
+          "applicantReference": {
+            "confidence": 0.97,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-reference"
+              }
+            ]
+          },
+          "submissionDate": {
+            "confidence": 0.96,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-date"
+              }
+            ]
+          },
+          "signed": {
+            "confidence": 0.95,
+            "sources": [
+              {
+                "page": 2,
+                "blockId": "p2-signature"
+              }
+            ]
+          },
+          "attachments": {
+            "confidence": 0.94,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-attachments"
+              }
+            ]
+          }
+        },
+        "actualProvenance": {
+          "requestTitle": {
+            "confidence": 0.99,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-title",
+                "locator": "bbox:40,60,520,92"
+              }
+            ]
+          },
+          "requestType": {
+            "confidence": 0.98,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-type"
+              }
+            ]
+          },
+          "applicantReference": {
+            "confidence": 0.97,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-reference"
+              }
+            ]
+          },
+          "submissionDate": {
+            "confidence": 0.96,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-date"
+              }
+            ]
+          },
+          "signed": {
+            "confidence": 0.95,
+            "sources": [
+              {
+                "page": 2,
+                "blockId": "p2-signature"
+              }
+            ]
+          },
+          "attachments": {
+            "confidence": 0.94,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-attachments"
+              }
+            ]
+          }
+        },
+        "provenanceCorrect": true,
+        "expectedAudit": {
+          "adapter": "govflow-ocr-contract/0.2.0",
+          "contractVersion": "1.0.0",
+          "minimumConfidence": 0.75,
+          "documentId": "synthetic-benchmark-ocr-complete",
+          "extractedFields": 6,
+          "rejectedFields": 0
+        },
+        "actualAudit": {
+          "adapter": "govflow-ocr-contract/0.2.0",
+          "contractVersion": "1.0.0",
+          "minimumConfidence": 0.75,
+          "documentId": "synthetic-benchmark-ocr-complete",
+          "extractedFields": 6,
+          "rejectedFields": 0
+        },
+        "auditCorrect": true,
+        "exact": true
+      },
+      {
+        "id": "ocr-missing-text",
+        "slice": "ocr-failure",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedDossier": {
+          "requestType": "Tiếp nhận thử nghiệm"
+        },
+        "actualDossier": {
+          "requestType": "Tiếp nhận thử nghiệm"
+        },
+        "dossierCorrect": true,
+        "expectedFailures": [
+          {
+            "code": "MISSING_TEXT",
+            "field": "requestTitle"
+          }
+        ],
+        "actualFailures": [
+          {
+            "code": "MISSING_TEXT",
+            "field": "requestTitle"
+          }
+        ],
+        "failuresCorrect": true,
+        "expectedProvenance": {
+          "requestType": {
+            "confidence": 0.98,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-type"
+              }
+            ]
+          }
+        },
+        "actualProvenance": {
+          "requestType": {
+            "confidence": 0.98,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-type"
+              }
+            ]
+          }
+        },
+        "provenanceCorrect": true,
+        "expectedAudit": {
+          "adapter": "govflow-ocr-contract/0.2.0",
+          "contractVersion": "1.0.0",
+          "minimumConfidence": 0.75,
+          "documentId": "synthetic-benchmark-ocr-missing-text",
+          "extractedFields": 1,
+          "rejectedFields": 1
+        },
+        "actualAudit": {
+          "adapter": "govflow-ocr-contract/0.2.0",
+          "contractVersion": "1.0.0",
+          "minimumConfidence": 0.75,
+          "documentId": "synthetic-benchmark-ocr-missing-text",
+          "extractedFields": 1,
+          "rejectedFields": 1
+        },
+        "auditCorrect": true,
+        "exact": true
+      },
+      {
+        "id": "ocr-low-confidence",
+        "slice": "ocr-confidence",
+        "expectedStatus": "needs_review",
+        "actualStatus": "needs_review",
+        "statusCorrect": true,
+        "expectedDossier": {
+          "requestTitle": "Hồ sơ OCR benchmark"
+        },
+        "actualDossier": {
+          "requestTitle": "Hồ sơ OCR benchmark"
+        },
+        "dossierCorrect": true,
+        "expectedFailures": [
+          {
+            "code": "LOW_CONFIDENCE",
+            "field": "applicantReference"
+          }
+        ],
+        "actualFailures": [
+          {
+            "code": "LOW_CONFIDENCE",
+            "field": "applicantReference"
+          }
+        ],
+        "failuresCorrect": true,
+        "expectedProvenance": {
+          "requestTitle": {
+            "confidence": 0.99,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-title"
+              }
+            ]
+          }
+        },
+        "actualProvenance": {
+          "requestTitle": {
+            "confidence": 0.99,
+            "sources": [
+              {
+                "page": 1,
+                "blockId": "p1-title"
+              }
+            ]
+          }
+        },
+        "provenanceCorrect": true,
+        "expectedAudit": {
+          "adapter": "govflow-ocr-contract/0.2.0",
+          "contractVersion": "1.0.0",
+          "minimumConfidence": 0.75,
+          "documentId": "synthetic-benchmark-ocr-low-confidence",
+          "extractedFields": 1,
+          "rejectedFields": 1
+        },
+        "actualAudit": {
+          "adapter": "govflow-ocr-contract/0.2.0",
+          "contractVersion": "1.0.0",
+          "minimumConfidence": 0.75,
+          "documentId": "synthetic-benchmark-ocr-low-confidence",
+          "extractedFields": 1,
+          "rejectedFields": 1
+        },
+        "auditCorrect": true,
+        "exact": true
+      }
+    ],
+    "questions": [
+      {
+        "id": "scope-dossier",
+        "slice": "supported",
+        "expectedSupported": true,
+        "actualSupported": true,
+        "correct": true
+      },
+      {
+        "id": "scope-documents",
+        "slice": "supported",
+        "expectedSupported": true,
+        "actualSupported": true,
+        "correct": true
+      },
+      {
+        "id": "scope-citation",
+        "slice": "supported",
+        "expectedSupported": true,
+        "actualSupported": true,
+        "correct": true
+      },
+      {
+        "id": "scope-reference",
+        "slice": "supported",
+        "expectedSupported": true,
+        "actualSupported": true,
+        "correct": true
+      },
+      {
+        "id": "scope-attachment",
+        "slice": "supported",
+        "expectedSupported": true,
+        "actualSupported": true,
+        "correct": true
+      },
+      {
+        "id": "scope-date",
+        "slice": "supported",
+        "expectedSupported": true,
+        "actualSupported": true,
+        "correct": true
+      },
+      {
+        "id": "scope-signature",
+        "slice": "supported",
+        "expectedSupported": true,
+        "actualSupported": true,
+        "correct": true
+      },
+      {
+        "id": "scope-ruleset",
+        "slice": "supported",
+        "expectedSupported": true,
+        "actualSupported": true,
+        "correct": true
+      },
+      {
+        "id": "scope-weather",
+        "slice": "unsupported",
+        "expectedSupported": false,
+        "actualSupported": false,
+        "correct": true
+      },
+      {
+        "id": "scope-stock",
+        "slice": "unsupported",
+        "expectedSupported": false,
+        "actualSupported": false,
+        "correct": true
+      },
+      {
+        "id": "scope-travel",
+        "slice": "unsupported",
+        "expectedSupported": false,
+        "actualSupported": false,
+        "correct": true
+      },
+      {
+        "id": "scope-empty",
+        "slice": "boundary",
+        "expectedSupported": false,
+        "actualSupported": false,
+        "correct": true
+      },
+      {
+        "id": "scope-confusable-hosox",
+        "slice": "scope-confusable",
+        "expectedSupported": false,
+        "actualSupported": false,
+        "correct": true
+      },
+      {
+        "id": "scope-confusable-tailieux",
+        "slice": "scope-confusable",
+        "expectedSupported": false,
+        "actualSupported": false,
+        "correct": true
+      },
+      {
+        "id": "scope-confusable-rulesetter",
+        "slice": "scope-confusable",
+        "expectedSupported": false,
+        "actualSupported": false,
+        "correct": true
+      },
+      {
+        "id": "scope-confusable-generic-form",
+        "slice": "scope-confusable",
+        "expectedSupported": false,
+        "actualSupported": false,
+        "correct": true
+      }
+    ]
+  }
+}

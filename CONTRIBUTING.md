@@ -5,8 +5,9 @@ Thank you for helping improve an auditable, local-first dossier-checking workflo
 ## Before contributing
 
 - Read [README.md](README.md), [docs/architecture.md](docs/architecture.md), and [docs/evaluation.md](docs/evaluation.md).
+- Follow the repository [Code of Conduct](CODE_OF_CONDUCT.md).
 - Search existing [issues](https://github.com/mrlouisdev/govflow-vn/issues) before opening a new one.
-- For a material feature or evaluation change, open an issue first so scope and evidence can be agreed.
+- Use the structured [bug](.github/ISSUE_TEMPLATE/bug.yml), [feature](.github/ISSUE_TEMPLATE/feature.yml), or [evaluation](.github/ISSUE_TEMPLATE/evaluation.yml) issue form. For a material feature or evaluation change, open an issue first so scope and evidence can be agreed.
 - Report vulnerabilities through [SECURITY.md](SECURITY.md), not a public issue.
 
 ## Local verification
@@ -36,6 +37,7 @@ Open `http://127.0.0.1:8080/demo/` and stop the server with `Ctrl+C`.
 - State limitations; do not describe OCR, SLM/RAG, or official rulesets as implemented until code and reproducible evaluation artifacts exist.
 - Use synthetic, non-identifying fixtures only. Do not commit confidential inputs or authentication material.
 - Preserve citation and audit fields unless the pull request explicitly revises their documented contract.
+- Complete the pull-request template, including risk and rollback notes.
 
 ## Evaluation contributions
 

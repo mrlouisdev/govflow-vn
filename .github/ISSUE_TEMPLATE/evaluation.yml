@@ -1,0 +1,61 @@
+name: Evaluation or benchmark
+description: Propose or report a reproducible evaluation
+title: "[Evaluation]: "
+labels: [evaluation]
+body:
+  - type: input
+    id: dataset
+    attributes:
+      label: Dataset and version
+      description: Name the synthetic dataset and its version or generation procedure.
+    validations:
+      required: true
+  - type: input
+    id: ruleset
+    attributes:
+      label: Ruleset and version
+    validations:
+      required: true
+  - type: input
+    id: engine
+    attributes:
+      label: Engine version or commit
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Reproduction command
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: metrics
+    attributes:
+      label: Metric definitions and expected result
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Raw result artifact
+      description: Provide machine-readable output, or its planned format for a proposal.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include relevant OS, runtime, hardware, warm-up, and repetitions.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: The dataset is synthetic and contains no identifying information.
+          required: true
+        - label: The claim is limited to the documented versions and environment.
+          required: true

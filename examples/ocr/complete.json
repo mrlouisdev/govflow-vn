@@ -1,0 +1,13 @@
+{
+  "contractVersion": "1.0.0",
+  "documentId": "synthetic-ocr-complete",
+  "synthetic": true,
+  "fields": {
+    "requestTitle": { "value": "Hồ sơ OCR thử nghiệm", "confidence": 0.99, "sources": [{ "page": 1, "blockId": "p1-title", "locator": "bbox:40,60,520,92" }] },
+    "requestType": { "value": "Tiếp nhận thử nghiệm", "confidence": 0.98, "sources": [{ "page": 1, "blockId": "p1-type" }] },
+    "applicantReference": { "value": "DEMO-101", "confidence": 0.97, "sources": [{ "page": 1, "blockId": "p1-reference" }] },
+    "submissionDate": { "value": "2026-08-13", "confidence": 0.96, "sources": [{ "page": 1, "blockId": "p1-date" }] },
+    "signed": { "value": true, "confidence": 0.95, "sources": [{ "page": 2, "blockId": "p2-signature" }] },
+    "attachments": { "value": ["application_form", "supporting_document"], "confidence": 0.94, "sources": [{ "page": 1, "blockId": "p1-attachment-list" }] }
+  }
+}
